@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserResponse findById(Integer id) {
+    public UserResponse findById(Long id) {
         return buildResponse(userRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new));
     }
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserResponse update(Integer id, UserRequest userRequest) {
+    public UserResponse update(Long id, UserRequest userRequest) {
         User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
         user.setName(userRequest.getName());
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void delete(Integer id) {
+    public void delete(Long id) {
         userRepository.deleteById(id);
     }
 
