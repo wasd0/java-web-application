@@ -1,8 +1,8 @@
 package com.wasd.web.service.impl;
 
 import com.wasd.web.entity.User;
-import com.wasd.web.model.UserRequest;
-import com.wasd.web.model.UserResponse;
+import com.wasd.web.model.user.UserRequest;
+import com.wasd.web.model.user.UserResponse;
 import com.wasd.web.repository.UserRepository;
 import com.wasd.web.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
