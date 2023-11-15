@@ -1,4 +1,4 @@
-package com.wasd.web.model;
+package com.wasd.web.model.user;
 
 import java.util.Date;
 

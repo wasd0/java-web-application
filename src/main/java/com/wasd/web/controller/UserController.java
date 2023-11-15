@@ -1,7 +1,7 @@
 package com.wasd.web.controller;
 
-import com.wasd.web.model.UserRequest;
-import com.wasd.web.model.UserResponse;
+import com.wasd.web.model.user.UserRequest;
+import com.wasd.web.model.user.UserResponse;
 import com.wasd.web.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,7 @@ public class UserController {
     }
     
     @GetMapping("{id}")
-    public UserResponse findById(@PathVariable Integer id) {
+    public UserResponse findById(@PathVariable Long id) {
         return userService.findById(id);
     }
     
@@ -34,13 +34,13 @@ public class UserController {
     }
     
     @PatchMapping("/{id}")
-    public UserResponse update(@PathVariable Integer id, @RequestBody UserRequest request) {
+    public UserResponse update(@PathVariable Long id, @RequestBody UserRequest request) {
         return userService.update(id, request);
     }
     
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
+    public void delete(@PathVariable Long id) {
         userService.delete(id);
     }
 }

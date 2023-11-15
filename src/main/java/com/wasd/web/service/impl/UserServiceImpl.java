@@ -1,8 +1,8 @@
 package com.wasd.web.service.impl;
 
 import com.wasd.web.entity.User;
-import com.wasd.web.model.UserRequest;
-import com.wasd.web.model.UserResponse;
+import com.wasd.web.model.user.UserRequest;
+import com.wasd.web.model.user.UserResponse;
 import com.wasd.web.repository.UserRepository;
 import com.wasd.web.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserResponse findById(Integer id) {
+    public UserResponse findById(Long id) {
         return buildResponse(userRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new));
     }
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserResponse update(Integer id, UserRequest userRequest) {
+    public UserResponse update(Long id, UserRequest userRequest) {
         User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
         user.setName(userRequest.getName());
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void delete(Integer id) {
+    public void delete(Long id) {
         userRepository.deleteById(id);
     }
 
