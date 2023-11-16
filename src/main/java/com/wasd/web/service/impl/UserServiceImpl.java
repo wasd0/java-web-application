@@ -7,7 +7,6 @@ import com.wasd.web.repository.UserRepository;
 import com.wasd.web.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
 import java.util.List;
@@ -22,7 +21,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<UserResponse> findAll() {
         return userRepository.findAll()
                 .stream()
@@ -31,14 +29,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public UserResponse findById(Long id) {
         return buildResponse(userRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new));
     }
 
     @Override
-    @Transactional
     public UserResponse create(UserRequest userRequest) {
         User user = createUserFromRequest(userRequest);
         userRepository.save(user);
@@ -46,7 +42,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public UserResponse update(Long id, UserRequest userRequest) {
         User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
@@ -58,21 +53,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
 
     private User createUserFromRequest(UserRequest request) {
-        return request == null ? null : new User()
-                .setName(request.getName())
-                .setRegistrationDate(Calendar.getInstance().getTime());
+        return User.builder()
+                .name(request.getName())
+                .registrationDate(Calendar.getInstance().getTime())
+                .build();
     }
 
     private UserResponse buildResponse(User user) {
-        return user == null ? null : new UserResponse()
-                .setId(user.getId())
-                .setName(user.getName())
-                .setRegistrationDate(user.getRegistrationDate());
+        return UserResponse.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .registrationDate(user.getRegistrationDate())
+                .build();
     }
 }
