@@ -1,4 +1,4 @@
-<h1>Write stories application</h1>
+<h1>Job search application</h1>
 
 <h3>1. Set your data base properties</h1>
 <hr/>
