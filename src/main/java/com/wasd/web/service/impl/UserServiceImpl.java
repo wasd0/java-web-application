@@ -8,7 +8,7 @@ import com.wasd.web.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
     private User createUserFromRequest(UserRequest request) {
         return User.builder()
                 .name(request.getName())
-                .registrationDate(Calendar.getInstance().getTime())
+                .registrationDate(ZonedDateTime.now())
                 .build();
     }
 

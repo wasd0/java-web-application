@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 @Data
 @AllArgsConstructor
@@ -14,5 +14,5 @@ import java.util.Date;
 public class UserRequest {
     private Long id;
     private String name;
-    private Date registrationDate;
+    private ZonedDateTime registrationDate;
 }

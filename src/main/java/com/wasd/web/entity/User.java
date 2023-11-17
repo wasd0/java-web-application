@@ -5,8 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.TimeZoneColumn;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 @Entity
 @Data
@@ -20,6 +21,6 @@ public class User {
     private Long id;
     @Column(name = "name", nullable = false, length = 64)
     private String name;
-    @Column(name = "registration_date", nullable = false)
-    private Date registrationDate;
+    @TimeZoneColumn(name = "registration_date")
+    private ZonedDateTime registrationDate;
 }
