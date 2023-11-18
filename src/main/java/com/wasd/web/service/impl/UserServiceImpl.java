@@ -44,11 +44,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse update(Long id, UserRequest userRequest) {
         User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-
         user.setName(userRequest.getName());
-
         userRepository.save(user);
-
         return buildResponse(user);
     }
 
@@ -57,18 +54,18 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    private User createUserFromRequest(UserRequest request) {
-        return User.builder()
-                .name(request.getName())
-                .registrationDate(ZonedDateTime.now())
-                .build();
-    }
-
     private UserResponse buildResponse(User user) {
         return UserResponse.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .registrationDate(user.getRegistrationDate())
+                .build();
+    }
+    
+    private User createUserFromRequest(UserRequest request) {
+        return User.builder()
+                .name(request.getName())
+                .registrationDate(ZonedDateTime.now())
                 .build();
     }
 }

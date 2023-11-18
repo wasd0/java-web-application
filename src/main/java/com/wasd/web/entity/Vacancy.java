@@ -8,26 +8,29 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.TimeZoneColumn;
 
 import java.time.ZonedDateTime;
-import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "users")
-public class User {
+@Table(name = "vacancies")
+public class Vacancy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 64, unique = true)
-    private String name;
+    @Column(name = "title", nullable = false, length = 64)
+    private String title;
 
-    @TimeZoneColumn(name = "registration_date")
-    private ZonedDateTime registrationDate;
+    @Column(name = "content", nullable = false, length = 2000)
+    private String content;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
-    private List<Vacancy> vacancies;
+    @TimeZoneColumn(name = "creation_time")
+    private ZonedDateTime creationTime;
+    
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
 }
