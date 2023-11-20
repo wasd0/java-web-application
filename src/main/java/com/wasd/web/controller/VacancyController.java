@@ -3,11 +3,13 @@ package com.wasd.web.controller;
 import com.wasd.web.model.vacancy.VacancyRequest;
 import com.wasd.web.model.vacancy.VacancyResponse;
 import com.wasd.web.service.VacancyService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.time.ZonedDateTime;
 
-@RestController
+@Controller
 @RequestMapping("/vacancies")
 public class VacancyController {
 
@@ -17,27 +19,48 @@ public class VacancyController {
         this.vacancyService = vacancyService;
     }
 
-    @GetMapping("/")
-    public List<VacancyResponse> findAll() {
-        return vacancyService.findAll();
+    @GetMapping
+    public String findAll(Model model) {
+
+        model.addAttribute("vacancies", vacancyService.findAll());
+
+        return "vacancies/allVacancies";
     }
 
     @GetMapping("/{id}")
-    public VacancyResponse findById(@PathVariable Long id) {
-        return vacancyService.findById(id);
+    public String findById(@PathVariable Long id, Model model) {
+        VacancyResponse vacancyResponse = vacancyService.findById(id);
+        ZonedDateTime creationDateTime = vacancyResponse.getCreationTime();
+        String time = String.format("%s:%s", creationDateTime.getHour(), creationDateTime.getMinute());
+        String date = String.format("%s.%s", creationDateTime.getDayOfMonth(), creationDateTime.getMonthValue());
+
+        model.addAttribute("vacancy", vacancyResponse);
+        model.addAttribute("creationTime", String.format("%s - %s", time, date));
+
+        return "vacancies/vacancy";
+    }
+
+    @GetMapping("/new")
+    public String createForm(Model model) {
+        VacancyRequest vacancy = new VacancyRequest();
+        model.addAttribute("vacancy", vacancy);
+        
+        return "vacancies/createVacancyForm";
     }
     
     @PatchMapping("/{id}")
     public VacancyResponse update(@PathVariable Long id, @RequestBody VacancyRequest request) {
         return vacancyService.update(id, request);
     }
-    
+
     //TODO: Get authorized user and set as author
-    @PostMapping("/")
-    public VacancyResponse create(@RequestBody VacancyRequest request) {
-        return vacancyService.create(request);
+    @PostMapping("/created")
+    public String create(@ModelAttribute VacancyRequest request, Model model) {
+        model.addAttribute("vacancy", request);
+        vacancyService.create(request);
+        return "redirect:/vacancies";
     }
-    
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         vacancyService.delete(id);

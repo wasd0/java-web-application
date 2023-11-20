@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vacancy</title>
+</head>
+<body>
+<h3 th:text="${vacancy.title}"></h3>
+<hr/>
+<p th:text="${vacancy.content}"></p>
+<hr/>
+<br/>
+<h5 th:text="${creationTime}"></h5>
+<h5 th:text="${creationDate}"></h5>
+<h5>
+    <a th:href="@{'/users/' + ${vacancy.authorResponse.id}}" th:text="${vacancy.authorResponse.name}"></a>
+</h5>
+</body>
+</html>

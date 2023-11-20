@@ -30,7 +30,7 @@ public class Vacancy {
     @TimeZoneColumn(name = "creation_time")
     private ZonedDateTime creationTime;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private User author;
 }
