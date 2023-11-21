@@ -1,4 +1,13 @@
 <h1>Job search application</h1>
+<h4>Stack:
+<list>
+  <ol>* Spring[boot, web, data-jpa]</ol>
+  <ol>* Thymeleaf</ol>
+  <ol>* Hibernate + postgres</ol>
+  <ol>* Lombok</ol>
+</list>
+</h4>
+<hr/>
 
 <h3>1. Set your data base properties</h1>
 <hr/>
