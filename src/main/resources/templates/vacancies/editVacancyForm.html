@@ -2,15 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create new vacancy</title>
+    <title>Edit vacancy</title>
 </head>
 <body>
 <div align="center">
-    <h3>Vacancy</h3>
-    <form action="#" th:action="@{/vacancies}" th:method="post" th:object="${vacancy}">
+    <h3>Edit vacancy</h3>
+    <form action="#" th:action="@{'/vacancies/' + ${id}}" th:method="patch" th:object="${vacancy}">
         <p>Title: <input type="text" th:field="*{title}"/></p>
         <p>Content: <input type="text" th:field="*{content}"/></p>
-        <p>Author id: <input id="" type="number" th:field="*{authorId}"/></p>
         <p><input type="submit" value="Submit"/></p>
     </form>
 </div>

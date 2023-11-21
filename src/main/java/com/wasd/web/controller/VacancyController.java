@@ -23,9 +23,7 @@ public class VacancyController {
 
     @GetMapping
     public String findAll(Model model) {
-
         model.addAttribute("vacancies", vacancyService.findAll());
-
         return "vacancies/allVacancies";
     }
 
@@ -40,25 +38,33 @@ public class VacancyController {
 
         model.addAttribute("vacancy", vacancyResponse);
         model.addAttribute("creationTime", String.format("%s - %s", time, date));
-
         return "vacancies/vacancy";
     }
 
     @GetMapping("/new")
-    public String createForm(Model model) {
+    public String showCreateForm(Model model) {
         VacancyRequest vacancy = new VacancyRequest();
         model.addAttribute("vacancy", vacancy);
-        
         return "vacancies/createVacancyForm";
     }
-    
-    @PatchMapping("/{id}")
-    public VacancyResponse update(@PathVariable Long id, @RequestBody VacancyRequest request) {
-        return vacancyService.update(id, request);
+
+    @GetMapping("/{id}/edit")
+    public String showEditForm(@PathVariable Long id, Model model) {
+        VacancyRequest vacancy = new VacancyRequest();
+        model.addAttribute("vacancy", vacancy);
+        model.addAttribute("id", id);
+        return "vacancies/editVacancyForm";
     }
 
-    //TODO: Get authorized user and set as author
-    @PostMapping("/created")
+    @PatchMapping("/{id}")
+    public String update(@PathVariable Long id, @ModelAttribute VacancyRequest request, Model model) {
+        vacancyService.update(id, request);
+        model.addAttribute("vacancy", request);
+        model.addAttribute("id", id);
+        return "redirect:/vacancies";
+    }
+
+    @PostMapping
     public String create(@ModelAttribute VacancyRequest request, Model model) {
         model.addAttribute("vacancy", request);
         vacancyService.create(request);
@@ -66,7 +72,8 @@ public class VacancyController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public String delete(@PathVariable Long id) {
         vacancyService.delete(id);
+        return "redirect:/vacancies";
     }
 }

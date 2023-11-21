@@ -5,15 +5,21 @@
     <title>Vacancy</title>
 </head>
 <body>
-<h3 th:text="${vacancy.title}"></h3>
-<hr/>
-<p th:text="${vacancy.content}"></p>
-<hr/>
-<br/>
-<h5 th:text="${creationTime}"></h5>
-<h5 th:text="${creationDate}"></h5>
-<h5>
-    <a th:href="@{'/users/' + ${vacancy.authorResponse.id}}" th:text="${vacancy.authorResponse.name}"></a>
-</h5>
+<div align="center">
+    <h3 th:text="${vacancy.title}"></h3>
+    <hr/>
+    <p th:text="${vacancy.content}"></p>
+    <hr/>
+    <br/>
+    <h5 th:text="${creationTime}"></h5>
+    <h5>
+        <a th:href="@{'/users/' + ${vacancy.authorResponse.id}}"
+           th:text="${vacancy.authorResponse.name}"></a>
+    </h5>
+    <button><a th:href="@{'/vacancies/' + ${vacancy.id} + '/edit'}" th:text="Edit"></a></button>
+    <form action="#" th:action="@{'/vacancies/' + ${vacancy.id}}" th:method="delete" th:object="${vacancy}">
+        <p><input type="submit" value="Delete"></p>
+    </form>
+</div>
 </body>
 </html>

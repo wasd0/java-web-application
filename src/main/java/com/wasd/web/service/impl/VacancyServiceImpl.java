@@ -32,15 +32,7 @@ public class VacancyServiceImpl implements VacancyService {
                 .map(this::buildResponse)
                 .collect(Collectors.toList());
     }
-
-    @Override
-    public List<VacancyResponse> findAllByAuthor(Long authorId) {
-        return vacancyRepository.findAll().stream()
-                .filter(vacancy -> vacancy.getAuthor().getId().equals(authorId))
-                .map(this::buildResponse)
-                .collect(Collectors.toList());
-    }
-
+    
     @Override
     public VacancyResponse findById(Long id) {
         return buildResponse(vacancyRepository.findById(id)

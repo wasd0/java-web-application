@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All users</title>
+</head>
+<body>
+<div align="center">
+    <table>
+        <thead>
+        <tr>
+            <th scope="col"> User </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${users.isEmpty()}">
+            <td colspan="2"> No users </td>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td><span th:text="${user.name}"> Name </span></td>
+            <td>
+                <button><a th:href="@{'/users/' + ${user.id}}"> Profile </a></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <button><a href="users/new">Create user</a></button>
+</div>
+</body>
+</html>
