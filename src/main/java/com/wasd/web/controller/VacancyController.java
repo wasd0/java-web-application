@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 @Controller
@@ -31,8 +33,10 @@ public class VacancyController {
     public String findById(@PathVariable Long id, Model model) {
         VacancyResponse vacancyResponse = vacancyService.findById(id);
         ZonedDateTime creationDateTime = vacancyResponse.getCreationTime();
-        String time = String.format("%s:%s", creationDateTime.getHour(), creationDateTime.getMinute());
-        String date = String.format("%s.%s", creationDateTime.getDayOfMonth(), creationDateTime.getMonthValue());
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(creationDateTime.toInstant(), ZoneId.systemDefault());
+
+        String time = String.format("%s:%s", localDateTime.getHour(), creationDateTime.getMinute());
+        String date = String.format("%s.%s", localDateTime.getDayOfMonth(), creationDateTime.getMonthValue());
 
         model.addAttribute("vacancy", vacancyResponse);
         model.addAttribute("creationTime", String.format("%s - %s", time, date));
