@@ -1,4 +1,4 @@
-<h1>Job search application</h1>
+<h1>Simple CRUD application</h1>
 <h4>Stack:
 <list>
   <ol>* Spring[boot, web, data-jpa]</ol>
